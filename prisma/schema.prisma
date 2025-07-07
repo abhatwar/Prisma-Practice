@@ -15,6 +15,7 @@ model User {
   createdAt DateTime  @default(now())
   Address   Address[]
   order     Order[]
+  address   Address[]
 }
 
 model Product {
@@ -48,21 +49,22 @@ model OrderItem {
   orderId   Int
   productId Int
   quantity  Int
-  price     Decimal @db.Decimal(10, 2)
-  order     Order   @relation(fields: [orderId], references: [id])
-  product   Product @relation(fields: [productId], references: [id])
+  price     Decimal   @db.Decimal(10, 2)
+  order     Order     @relation(fields: [orderId], references: [id])
+  product   Product   @relation(fields: [productId], references: [id])
 }
 
 model Address {
-  id         Int      @id @default(autoincrement())
-  userId     Int
-  line1      String
-  line2      String?
-  city       String
-  state      String
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  line1     String
+  line2     String?
+  city      String
+  state     String
   postalCode String
-  country    String
-  isDefault  Boolean  @default(false)
-  createdAt  DateTime @default(now())
-  User       User     @relation(fields: [userId], references: [id])
+  country   String
+  isDefault Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  user      User     @relation(fields: [userId], references: [id])
 }
