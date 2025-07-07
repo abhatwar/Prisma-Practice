@@ -42,6 +42,7 @@ model Order {
   totalAmount Decimal     @db.Decimal(10, 2)
   user        User        @relation(fields: [userId], references: [id])
   orderItem   OrderItem[]
+  payment     Payment[]
 }
 
 model OrderItem {
@@ -73,4 +74,15 @@ model CategoryDetails {
   id       Int       @id @default(autoincrement())
   name     String    @unique
   product  Product[]
+}
+
+model Payment {
+  id         Int      @id @default(autoincrement())
+  orderId    Int
+  method     String   // e.g., UPI, Cash, Card, NetBanking
+  status     String   @default("pending") // pending, completed, failed
+  paidAt     DateTime?
+  transactionId String?
+
+  order      Order    @relation(fields: [orderId], references: [id])
 }
