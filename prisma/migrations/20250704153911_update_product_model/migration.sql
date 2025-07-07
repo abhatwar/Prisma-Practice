@@ -1,0 +1,22 @@
+BEGIN TRY
+
+BEGIN TRAN;
+
+-- AlterTable
+ALTER TABLE [dbo].[Product] ADD [imageUrl] NVARCHAR(1000),
+[sku] NVARCHAR(1000),
+[status] NVARCHAR(1000) NOT NULL CONSTRAINT [Product_status_df] DEFAULT 'active',
+[stock] INT NOT NULL CONSTRAINT [Product_stock_df] DEFAULT 0;
+
+COMMIT TRAN;
+
+END TRY
+BEGIN CATCH
+
+IF @@TRANCOUNT > 0
+BEGIN
+    ROLLBACK TRAN;
+END;
+THROW
+
+END CATCH
