@@ -13,7 +13,6 @@ model User {
   email     String    @unique
   password  String
   createdAt DateTime  @default(now())
-  Address   Address[]
   order     Order[]
   address   Address[]
 }
@@ -32,6 +31,7 @@ model Product {
   stock       Int         @default(0)
   brand       String?
   orderItem   OrderItem[]
+  categoryDetails    CategoryDetails[]   
 }
 
 model Order {
@@ -67,4 +67,10 @@ model Address {
   createdAt DateTime @default(now())
 
   user      User     @relation(fields: [userId], references: [id])
+}
+
+model CategoryDetails {
+  id       Int       @id @default(autoincrement())
+  name     String    @unique
+  product  Product[]
 }
